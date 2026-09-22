@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: cm3-smart-preview
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --workers 1 --bind 0.0.0.0:$PORT app:app
+    healthCheckPath: /
+    envVars:
+      - key: CM3_SECRET_KEY
+        generateValue: true
+      - key: CM3_REQUIRE_SECRET
+        value: "1"
+      - key: CM3_COOKIE_SECURE
+        value: "1"

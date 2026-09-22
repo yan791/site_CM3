@@ -1,0 +1,28 @@
+/* Entradas curtas, aplicadas apenas quando o JavaScript ativa cada elemento. */
+.reveal-item {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0) scale(.985);
+  transition: opacity .55s ease-out, transform .6s cubic-bezier(.2, .7, .2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal-item.reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  will-change: auto;
+}
+.reveal-item.reveal-image {
+  transform: translate3d(0, 14px, 0) scale(.97);
+}
+.reveal-item.reveal-image.reveal-visible {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item,
+  .reveal-item.reveal-image {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}
