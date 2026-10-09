@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p . && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:pages": "tsc -p . && vite build --mode pages"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.3.0",

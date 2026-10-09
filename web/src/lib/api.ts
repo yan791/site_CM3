@@ -47,9 +47,16 @@ const reserva: Publico = {
   classes: [],
 }
 
-export const publico = criarLoja<Publico & { carregado: boolean }>({ ...reserva, carregado: false })
+/**
+  Versão publicada no GitHub Pages (npm run build:pages): só páginas, sem o servidor Flask.
+  Planos e equipe usam os dados acima e a Área do aluno mostra um aviso no lugar do login.
+*/
+export const semServidor = import.meta.env.MODE === 'pages'
+
+export const publico = criarLoja<Publico & { carregado: boolean }>({ ...reserva, carregado: semServidor })
 
 export async function recarregarPublico() {
+  if (semServidor) return
   try {
     const d = await api<Publico>('/api/public')
     publico.definir({ ...d, carregado: true })

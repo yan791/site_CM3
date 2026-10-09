@@ -6,3 +6,4 @@ cm3.sqlite3
 
 # site em React
 web/node_modules/
+web/dist-pages/

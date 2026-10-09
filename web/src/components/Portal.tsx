@@ -6,10 +6,11 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent, type InputHTMLAttributes, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { cn } from '../lib/cn'
-import { api, dataBR, publico, recarregarPublico, type Eu, type Painel } from '../lib/api'
+import { api, dataBR, publico, recarregarPublico, semServidor, type Eu, type Painel } from '../lib/api'
 import { avisar } from '../lib/aviso'
 import { fecharPortal, portal, type ModoAcesso } from '../lib/portal'
 import { diasDaSemana } from '../dados/grade'
+import { contato } from '../dados/site'
 import { Logo } from './Logo'
 import { Botao } from './Botao'
 import { IconeFechar } from './icones'
@@ -31,10 +32,10 @@ export function Portal() {
   return <AnimatePresence>{aberto && <Gaveta key={vez} modoInicial={modo} />}</AnimatePresence>
 }
 
-type Tela = 'carregando' | 'acesso' | 'aluno' | 'admin'
+type Tela = 'carregando' | 'acesso' | 'aluno' | 'admin' | 'previa'
 
 function Gaveta({ modoInicial }: { modoInicial: ModoAcesso }) {
-  const [tela, setTela] = useState<Tela>('carregando')
+  const [tela, setTela] = useState<Tela>(semServidor ? 'previa' : 'carregando')
   const [modo, setModo] = useState<ModoAcesso>(modoInicial)
   const [eu, setEu] = useState<Eu | null>(null)
   const [painel, setPainel] = useState<Painel | null>(null)
@@ -50,7 +51,7 @@ function Gaveta({ modoInicial }: { modoInicial: ModoAcesso }) {
   }, [])
 
   useEffect(() => {
-    carregar().catch(() => setTela('acesso'))
+    if (!semServidor) carregar().catch(() => setTela('acesso'))
     fechar.current?.focus({ preventScroll: true })
     const esc = (e: KeyboardEvent) => e.key === 'Escape' && fecharPortal()
     addEventListener('keydown', esc)
@@ -109,6 +110,7 @@ function Gaveta({ modoInicial }: { modoInicial: ModoAcesso }) {
                   <span>Verificando seu acesso</span>
                 </div>
               )}
+              {tela === 'previa' && <Previa />}
               {tela === 'acesso' && <Acesso modo={modo} setModo={setModo} entrou={carregar} />}
               {tela === 'aluno' && eu && <AreaAluno eu={eu} recarregar={carregar} sair={sair} />}
               {tela === 'admin' && painel && <AreaAdmin painel={painel} setPainel={setPainel} sair={sair} />}
@@ -117,6 +119,31 @@ function Gaveta({ modoInicial }: { modoInicial: ModoAcesso }) {
         </div>
       </motion.aside>
     </div>
+  )
+}
+
+/* ---------- versão de apresentação (GitHub Pages, sem servidor) ---------- */
+
+function Previa() {
+  return (
+    <>
+      <p className="rotulo">Área do aluno</p>
+      <h2 className="portal-titulo">Em breve por aqui.</h2>
+      <p className="portal-texto">
+        Esta é a versão de apresentação do site. Na versão final, o aluno entra na conta para ver o plano e o vencimento, acompanhar os
+        treinos e reservar aulas, e a equipe gerencia tudo pelo painel.
+      </p>
+      <ul className="portal-recursos">
+        <li>Plano, vencimento e frequência</li>
+        <li>Treinos montados pela equipe</li>
+        <li>Reserva de aulas nos próximos 14 dias</li>
+        <li>Painel para cadastrar alunos, planos e aulas</li>
+      </ul>
+      <p className="portal-dica">Para se matricular agora, fale com a equipe da CM3.</p>
+      <div className="formulario">
+        <Botao href={contato.conversa} externo texto="Fale com a CM3" largo />
+      </div>
+    </>
   )
 }
 

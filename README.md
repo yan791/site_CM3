@@ -32,6 +32,12 @@ npm run build   # gera static/site/ (envie essa pasta junto no GitHub)
 - Planos e equipe continuam vindo do painel administrativo.
 - A versão anterior em HTML ficou guardada em `_versao-html-antiga/`.
 
+## Versão de apresentação no GitHub Pages
+
+O site também é publicado direto pelo GitHub, em https://yan791.github.io/site_CM3/. A cada envio para o branch `main` que mexa em `web/`, o GitHub compila o site (`npm run build:pages`) e atualiza o branch `gh-pages` (veja `.github/workflows/pages.yml`).
+
+O GitHub Pages só hospeda páginas, sem servidor Python. Por isso, nessa versão a Área do aluno e o painel mostram um aviso no lugar do login, e planos e equipe usam os dados iniciais. O sistema completo continua rodando com `python app.py` ou numa hospedagem com Python.
+
 ## Criar o primeiro administrador
 
 ```powershell

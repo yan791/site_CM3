@@ -3100,6 +3100,37 @@ body.pausado *::after {
   box-shadow: 0 0 0 4px rgb(0 155 152 / 0.16);
 }
 
+.portal-texto {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--cinza);
+}
+
+.portal-recursos {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+.portal-recursos li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--raio-p);
+  background: var(--claro);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.portal-recursos li::before {
+  content: '';
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--turquesa);
+  box-shadow: 0 0 0 4px rgb(0 155 152 / 0.18);
+}
+
 .portal-dica {
   margin-top: 16px;
   font-size: 0.86rem;
