@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: cm3-smart-preview
+    name: cm3-preview
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt

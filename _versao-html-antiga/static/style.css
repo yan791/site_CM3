@@ -2,3 +2,17 @@
 @media(max-width:960px){.header-actions .text-button{display:block}} @media(max-width:680px){.header-actions .text-button{font-size:10px}.header-actions{margin-left:auto;margin-right:4px}}
 .hero-image{background-image:url("/static/cm3-home.jpeg");background-position:center center;background-size:cover;background-repeat:no-repeat}
 .contact-methods a{display:inline-block}.contact-methods a strong{transition:color .2s}.contact-methods a:hover strong,.contact-methods a:focus-visible strong{color:var(--lime)}
+
+/* No celular, os ícones decorativos saem para deixar a interface mais limpa. */
+@media(max-width:680px){
+  .btn span,.text-button span,.outline-link span,.modality-card>b,
+  .circle-arrow,.map-caption .decorative-arrow,.contact-methods .decorative-arrow,
+  .footer-top .decorative-arrow,.benefits>div:first-child .benefit-icon{display:none}
+  .btn{gap:0;justify-content:center}
+  .play-icon{display:none}
+  .play-link{gap:0}
+  .map-caption{font-size:15px;justify-content:center;text-align:center}
+  .contact-methods a strong{display:inline-flex;align-items:center}
+}
+/* Botões sem setas: texto centralizado em todas as telas. */
+.btn{justify-content:center}

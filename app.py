@@ -3,11 +3,13 @@ import sqlite3
 from datetime import date, datetime, timedelta
 from functools import wraps
 from pathlib import Path
-from flask import Flask, abort, g, jsonify, render_template, request, session
+from flask import Flask, abort, g, jsonify, request, send_from_directory, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-DB = Path(__file__).with_name('cm3.sqlite3')
+DB = Path(os.environ.get('CM3_DB') or Path(__file__).with_name('cm3.sqlite3'))
+# site em React (pasta web/), gerado com "npm run build" dentro de static/site
+SITE = Path(__file__).with_name('static') / 'site'
 app = Flask(__name__)
 app.secret_key = os.environ.get('CM3_SECRET_KEY', 'dev-only-change-this-secret')
 if os.environ.get('CM3_REQUIRE_SECRET') == '1' and not os.environ.get('CM3_SECRET_KEY'):
@@ -69,7 +71,12 @@ def origin_check():
         if origin and origin.rstrip('/') != request.host_url.rstrip('/'): abort(403)
 
 @app.get('/')
-def index(): return render_template('index.html')
+def index():
+    if not (SITE / 'index.html').exists():
+        return 'Site ainda não gerado. Rode "npm run build" dentro da pasta web.', 503
+    resp = send_from_directory(SITE, 'index.html')
+    resp.headers['Cache-Control'] = 'no-cache'
+    return resp
 
 @app.get('/api/public')
 def public():

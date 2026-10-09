@@ -3,3 +3,6 @@ __pycache__/
 .venv/
 cm3.sqlite3
 .env
+
+# site em React
+web/node_modules/

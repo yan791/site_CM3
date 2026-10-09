@@ -4,7 +4,7 @@ O projeto já inclui a API e o site no mesmo aplicativo Flask. Para compartilhar
 
 ## Publicar no Render
 
-1. Crie um repositório **privado** no GitHub e envie os arquivos deste projeto. Não envie `cm3.sqlite3`, `.env` nem `__pycache__` (já estão no `.gitignore`). Inclua a pasta `static` com as fotos.
+1. Crie um repositório **privado** no GitHub e envie os arquivos deste projeto. Não envie `cm3.sqlite3`, `.env` nem `__pycache__` (já estão no `.gitignore`). Inclua a pasta `static` com as fotos e o site pronto em `static/site` (gerado com `npm run build` dentro de `web`). Não envie `web/node_modules`.
 2. No [Render](https://dashboard.render.com/), conecte sua conta do GitHub e escolha **New → Blueprint**. Selecione o repositório. O arquivo `render.yaml` já define o serviço web gratuito, a instalação, a inicialização e uma chave de sessão aleatória.
 3. Confirme a criação. Quando o deploy terminar, copie o endereço `https://...onrender.com` e envie aos sócios.
 
